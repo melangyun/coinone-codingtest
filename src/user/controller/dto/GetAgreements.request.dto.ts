@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsArray, IsInt, IsString, isString } from 'class-validator';
+import { IsArray, IsInt, IsString, Min, isString } from 'class-validator';
 
 export class GetAgreementRequestDto {
   @ApiProperty({
@@ -9,6 +9,8 @@ export class GetAgreementRequestDto {
     example: 1704067200,
     default: new Date().getTime(),
   })
+  @IsInt()
+  @Min(0)
   timestamp: number = new Date().getTime();
 
   @ApiProperty({
@@ -18,6 +20,7 @@ export class GetAgreementRequestDto {
     default: 0,
   })
   @IsInt()
+  @Min(0)
   balance: number = 0;
 
   @ApiProperty({
@@ -44,6 +47,7 @@ export class GetAgreementRequestDto {
     default: 5,
   })
   @IsInt()
+  @Min(0)
   limit: number = 5;
 
   @ApiProperty({
@@ -53,5 +57,6 @@ export class GetAgreementRequestDto {
     default: 0,
   })
   @IsInt()
+  @Min(0)
   offset: number = 0;
 }

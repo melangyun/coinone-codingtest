@@ -16,7 +16,7 @@ export class GetAgreementsResponseRow {
   @ApiProperty({
     description: '유저 id',
   })
-  userId: number;
+  userId: string;
 
   @ApiProperty({
     description: '동의 여부',
@@ -31,5 +31,5 @@ export class GetAgreementsResponseRow {
   @ApiProperty({
     description: '유저의 약관 동의/비동의 시간',
   })
-  createdAt: string;
+  createdAt: number;
 }

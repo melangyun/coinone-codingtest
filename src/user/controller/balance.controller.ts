@@ -1,9 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
+import { ApiResponse } from '@nestjs/swagger';
 
-import { BalanceService } from '../balance.service';
+import { BalanceService } from '../service/balance.service';
 import { GetAgreementRequestDto } from './dto/GetAgreements.request.dto';
 import { GetAgreementsResponseDto } from './dto/GetAgreements.response.dto';
-import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('/v1')
 export class BalanceController {
@@ -15,11 +15,14 @@ export class BalanceController {
     type: GetAgreementsResponseDto,
   })
   @Get('/user/agreements')
-  async getAgreements(
+  getAgreements(
     @Query() query: GetAgreementRequestDto,
-  ): Promise<GetAgreementsResponseDto> {
-    console.log(query);
-
-    return null;
+  ): GetAgreementsResponseDto {
+    const result = this.balanceService.getUsersBalance({
+      ...query,
+      userIds: query.userId,
+      minBalance: query.balance,
+    });
+    return { count: result.count, rows: result.rows };
   }
 }

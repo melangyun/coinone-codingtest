@@ -1,19 +1,13 @@
 import { Module } from '@nestjs/common';
 
-import { BalanceService } from './balance.service';
+import { BalanceService } from './service/balance.service';
 import { BalanceController } from './controller/balance.controller';
 import { BalanceHistoryMemoryRepository } from './repository/balanceHistory.memoryRepository';
-import { AgreeHistoryMemoryRepository } from './repository/agreeHistory.repository';
+import { AgreeHistoryMemoryRepository } from './repository/agreeHistory.memoryRepository';
 
 const repositories = [
-  {
-    provide: 'AgreeHistoryRepository',
-    useClass: BalanceHistoryMemoryRepository,
-  },
-  {
-    provide: 'BalanceHistoryRepository',
-    useClass: AgreeHistoryMemoryRepository,
-  },
+  BalanceHistoryMemoryRepository,
+  AgreeHistoryMemoryRepository,
 ];
 
 const services = [BalanceService];
