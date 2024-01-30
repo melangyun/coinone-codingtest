@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AppController } from './app.controller';
-import { BalanceModule } from './user/balance.module';
+import { BalanceModule } from './balance/balance.module';
 
 @Module({
   imports: [BalanceModule],
