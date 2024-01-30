@@ -1,4 +1,4 @@
-export interface GetUserBalanceCommand {
+export interface GetUserBalanceQuery {
   timestamp: number;
   minBalance: number;
   userIds: string[];
@@ -6,12 +6,12 @@ export interface GetUserBalanceCommand {
   offset: number;
 }
 
-export interface GetUserBalanceCommandResult {
+export interface GetUserBalanceQueryResult {
   count: number;
-  rows: GetUserBalanceCommandRow[];
+  rows: GetUserBalanceQueryRow[];
 }
 
-export interface GetUserBalanceCommandRow {
+export interface GetUserBalanceQueryRow {
   userId: string;
   isAgreed: boolean;
   balance: string;

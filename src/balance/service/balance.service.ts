@@ -3,9 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { BalanceHistoryMemoryRepository } from '../repository/balanceHistory.memoryRepository';
 import { AgreeHistoryMemoryRepository } from '../repository/agreeHistory.memoryRepository';
 import {
-  GetUserBalanceCommand,
-  GetUserBalanceCommandResult,
-} from './command/getUsersBalance.command';
+  GetUserBalanceQuery,
+  GetUserBalanceQueryResult,
+} from './query/getUsersBalance.query';
 import { BalanceHistory } from '../entity/BalanceHistory';
 import { AgreeHistory } from '../entity/AgreeHistory';
 
@@ -17,12 +17,12 @@ export class BalanceService {
   ) {}
 
   public getUsersBalance(
-    command: GetUserBalanceCommand,
-  ): GetUserBalanceCommandResult {
+    query: GetUserBalanceQuery,
+  ): GetUserBalanceQueryResult {
     const agreeHistories =
       this.agreeHistoryRepository.findRecentAgreedHistories(
-        command.timestamp,
-        command.userIds,
+        query.timestamp,
+        query.userIds,
       );
     const agreedUserIdToHistories: Map<string, AgreeHistory> = new Map(
       agreeHistories.map((agreeHistory) => [agreeHistory.userId, agreeHistory]),
@@ -30,17 +30,17 @@ export class BalanceService {
     const agreedUserIds = [...agreedUserIdToHistories.keys()];
 
     const count = this.balanceHistoryRepository.findRecentHistoriesCount(
-      command.timestamp,
-      command.minBalance,
+      query.timestamp,
+      query.minBalance,
       agreedUserIds,
     );
     const balanceHistories: BalanceHistory[] =
       this.balanceHistoryRepository.findRecentHistories(
-        command.timestamp,
-        command.minBalance,
+        query.timestamp,
+        query.minBalance,
         agreedUserIds,
-        command.limit,
-        command.offset,
+        query.limit,
+        query.offset,
       );
 
     return {
